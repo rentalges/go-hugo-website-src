@@ -52,7 +52,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       
       - name: Build
-        run: npm build
+        run: npm run build
       
       - name: FTP Deploy
         # You may pin to the exact commit or the version.
