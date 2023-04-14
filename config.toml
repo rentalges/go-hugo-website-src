@@ -1,5 +1,5 @@
-baseURL = "https://tailbliss.netlify.app/"
-title = "TailBliss"
+baseURL = "https://rentalges.com/"
+title = "rentalges"
 
 languageCode = "en-us"
 DefaultContentLanguage = "en"
@@ -13,14 +13,14 @@ darkmode_js = ["assets/js/darkmode.js"]
 enableInlineShortcodes = true
 
 [params]
-author = "Nusser Studios"
+author = "Torrman's Team"
 authorimage = "../assets/images/global/author.webp"
-github = "https://github.com/nusserstudios"
-facebook = "https://facebook.com/nusserstudios"
+github = "https://github.com/rentalges"
+facebook = "https://facebook.com/rentalges"
 og_image = "/images/tailbliss-cover.png"
-sitename = "TailBliss"
-twitter = "@nusserstudios"
-description = "TailBliss is Hugo Starter"
+sitename = "rentalges"
+twitter = "@rentalges"
+description = "Rentages - Rental Management"
 
 [markup]
 [markup.goldmark]
