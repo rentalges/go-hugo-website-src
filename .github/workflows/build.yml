@@ -1,0 +1,88 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to Hosting
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Hugo setup
+        # You may pin to the exact commit or the version.
+        # uses: peaceiris/actions-hugo@2e89aa66d0093e4cd14751b3028fc1a179452c2e
+        uses: peaceiris/actions-hugo@v2.5.0
+        with:
+          # The Hugo version to download (if necessary) and use. Example: 0.58.2
+          hugo-version: # optional, default is latest
+          # Download (if necessary) and use Hugo extended version. Example: true
+          extended: # optional, default is false
+      
+      - name: Get sourcecode
+        uses: actions/checkout@v2
+        with:
+          submodules: true  # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Check vesion, configuration and path content
+        run: |
+          hugo version
+          pwd
+          ls -l
+          hugo config
+
+      - name: NPM setup
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Build
+        run: npm build
+      
+      - name: FTP Deploy
+        # You may pin to the exact commit or the version.
+         # uses: SamKirkland/FTP-Deploy-Action@65c6a8f943bbf04faf9b59520a103318b418952e
+        uses: SamKirkland/FTP-Deploy-Action@4.1.0
+        with:
+          # ftp server
+          server: ftp.rentalges.com
+          # ftp username
+          username: rentalges_github
+          # ftp password
+          password: eAne1_440RR3#_
+          # Server port to connect to (read your web hosts docs)
+          port: 21
+          # protocol to deploy with - ftp, ftps, or ftps-legacy
+          protocol: ftps
+          # Folder to upload from, must end with trailing slash /
+          local-dir: public/
+          # Path to upload to on the server. Must end with trailing slash /
+          server-dir: /
+          # Path and name of the state file - this file is used to track which files have been deployed
+          state-name: # optional
+          # Prints which modifications will be made with current config options, but doesnt actually make any changes
+          dry-run: # optional
+          # Deletes ALL contents of server-dir, even items in excluded with exclude argument
+          dangerous-clean-slate: # optional
+          # An array of glob patterns, these files will not be included in the publish/delete process
+          exclude: # optional
+          # How verbose should the information be - minimal, standard, or verbose
+          log-level: # optional
+          # strict or loose
+          security: # optional
+        
